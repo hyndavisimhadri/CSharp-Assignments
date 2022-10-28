@@ -1,116 +1,53 @@
 ﻿using System;
 
-namespace Assignment2
+class AssignQ1
 {
-    class Employee
+    static void Main(string[] args)
     {
-        public int Empno;
-        public string Empname;
-        public double salary;
-        public double HRA;
-        public double TA;
-        public double DA;
-        public double PF;
-        public double TDS;
-        public double NetSalary;
-        public double GrossSalary;
-        public string EmpName
+        Console.WriteLine("Enter the action to be performed");
+        Console.WriteLine("Press 1 for Addition");
+        Console.WriteLine("Press 2 for Subtraction");
+        Console.WriteLine("Press 3 for Multiplication");
+        Console.WriteLine("Press 4 for Division");
+        int action = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("Enter 1st input");
+        int input1 = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("Enter 2nd input");
+        int input2 = Convert.ToInt32(Console.ReadLine());
+        int result = 0;
+        switch (action)
         {
-            get
-            {
-                return Empname;
-            }
-            set
-            {
-                Empname = value;
-            }
-        }
-        public int EmpNo
-        {
-            get { return Empno; }
-            set { Empno = value; }
-
-        }
-        public void Sal()
-        {
-            salary = Convert.ToDouble(Console.ReadLine());
-        }
-        public void Calc()
-        {
-            if (salary <= 5000)
-            {
-                HRA = 10 * (salary / 100);
-                TA = 5 * (salary / 100);
-                DA = 15 * (salary / 100);
-            }
-            else if (salary < 10000)
-            {
-                HRA = 15 * (salary / 100);
-                TA = 10 * (salary / 100);
-                DA = 20 * (salary / 100);
-
-
-            }
-            else if (salary < 15000)
-            {
-                HRA = 20 * (salary / 100);
-                TA = 15 * (salary / 100);
-                DA = 25 * (salary / 100);
-
-            }
-            else if (salary < 20000)
-            {
-                HRA = 25 * (salary / 100);
-                TA = 20 * (salary / 100);
-                DA = 30 * (salary / 100);
-
-            }
-            else
-            {
-                HRA = 30 * (salary / 100);
-                TA = 25 * (salary / 100);
-                DA = 35 * (salary / 100);
-            }
-            GrossSalary = salary + HRA + TA + DA;
-
-
-        }
-        public void CalculateSalary()
-        {
-            PF = 10 * (GrossSalary / 100);
-            TDS = 18 * (GrossSalary / 100);
-            NetSalary = GrossSalary - (PF + TDS);
-        }
-        public void Display()
-        {
-            Console.WriteLine("Employee no:" + Empno);
-            Console.WriteLine("Employee name:" + Empname);
-            Console.WriteLine("Employee salary:" + salary);
-            Console.WriteLine("House rent allowances:" + HRA);
-            Console.WriteLine("Traveling allownces:{0}" + TA);
-            Console.WriteLine("DA:{0}" + DA);
-            Console.WriteLine("TDS:{0}" + TDS);
-            Console.WriteLine("NetSalary:" + NetSalary);
-            Console.WriteLine("Gross Salary:" + GrossSalary);
-        }
-        public static void Main()
-        {
-            Employee emp = new Employee();
-            Console.WriteLine("Enter employee no:");
-            emp.EmpNo = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Enter employee name:");
-            emp.EmpName = Console.ReadLine();
-            Console.WriteLine("Enter employee salary:");
-            emp.Sal();
-            emp.Calc();
-            emp.CalculateSalary();
-            emp.Display();
-            Console.ReadKey();
-
-
-
-
-
+            case 1:
+                {
+                    action = input1 + input2;
+                    Console.WriteLine("Answer is");
+                    Console.WriteLine(action);
+                    break;
+                }
+            case 2:
+                {
+                    action = input1 - input2;
+                    Console.WriteLine("Answer is");
+                    Console.WriteLine(action);
+                    break;
+                }
+            case 3:
+                {
+                    action = input1 * input2;
+                    Console.WriteLine("Answer is");
+                    Console.WriteLine(action);
+                    break;
+                }
+            case 4:
+                {
+                    action = input1 / input2;
+                    Console.WriteLine("Answer is");
+                    Console.WriteLine(action);
+                    break;
+                }
+            default:
+                Console.WriteLine("Wrong action!! try again");
+                break;
         }
 
     }
