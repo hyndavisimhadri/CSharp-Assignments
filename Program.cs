@@ -1,50 +1,64 @@
 ﻿using System;
-using System.IO;
+using System.Reflection;
 
-namespace FileIO
+namespace Assignment8
 {
     public class program
     {
-        public static void Main()
+        static void Main(string[] args)
         {
+
+            Type T = Type.GetType("Assignment8.Customers");
+
+            PropertyInfo[] properties = T.GetProperties();
+            foreach (PropertyInfo property in properties)
+            {
+                Console.WriteLine(property.PropertyType + " " + property.Name);
+            }
+            Console.WriteLine("-------Loading assembly dynamically and involving a method-------");
             try
             {
-                string path = @"C:\Users\HYNDAVI\Source\Repos\FileIO\FileIO";
-                string[] files = Directory.GetFiles(path);
-                string[] directories = Directory.GetDirectories(path);
-                Console.WriteLine($"Files in{path}\n");
-                foreach (string file in files)
-                {
-                    string filesName = Path.GetFileName(file);
-                    Console.WriteLine(filesName);
-                    string filepath = Path.Combine(path, filesName);
-                    FileInfo myfile = new FileInfo(filepath);
-                    //OPEINING fike to read
-                    StreamReader sr = myfile.OpenText();
-                    string data = "";
-                    while ((data = sr.ReadLine()) != null)
-                    {
-                        Console.WriteLine(data);
-                    }
-                    Console.WriteLine("\n");
+                string dllfile = @"D:\classLibrary\ClassLibrary3.dll";
+                var assembly = Assembly.LoadFile(dllfile);
 
-                }
-                Console.WriteLine($"subdirectories inside{path}\n");
-                foreach (string directory in directories)
-                {
-                    DirectoryInfo directoryinfo = new DirectoryInfo(directory);
-                    directoryinfo.GetDirectories();
-                    string directoryName = directoryinfo.FullName;
-                    Console.WriteLine(directoryName);
-                }
+                var Type = assembly.GetType("ClassLibrary3.HelloWorld");
+
+                var obj = Activator.CreateInstance(Type);
+
+                var method = Type.GetMethod("Hello");
+                var r = method.Invoke(obj, new object[] { " everyone" });
+                Console.WriteLine(r);
             }
-            catch (IOException e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e);
+                Console.WriteLine(ex.Message);
             }
+        }
+    }
+    internal class Customers
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public Customers(int id, string name)
+        {
+            this.Id = id;
+            this.Name = name;
 
         }
-
+        public Customers()
+        {
+            this.Id = -1;
+            this.Name = String.Empty;
+        }
+        public void print()
+        {
+            Console.WriteLine($"ID={Id}");
+        }
+        public void printname()
+        {
+            Console.WriteLine($"Name ={Name}");
+            Console.ReadLine();
+        }
 
     }
 }

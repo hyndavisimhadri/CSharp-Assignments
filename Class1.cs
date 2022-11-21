@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace CSharpAssignment5
+namespace ClassLibrary3
 {
-    internal class Class1
+    public class HelloWorld
     {
+        public string Hello(string name)
+        {
+            return "hello" + name;
+        }
     }
 }
