@@ -1,81 +1,48 @@
 ﻿using System;
-using System.Collections.Generic;
-
+using System.Collections;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace Assign3B
+namespace IEnumerableExample
 {
-    internal class StackException : Exception
+    class Player
     {
-        public StackException()
+        public string Name { get; set; }
+        public int Run { get; set; }
+        public Player(string name, int run)
         {
-
-
-            Console.WriteLine("stack is full");
-
+            Name = name;
+            Run = run;
         }
-        public StackException(string message)
+    }
+    class Team : IEnumerable
+    {
+        private Player[] playerArray = new Player[4];
+        public Team()
         {
-
-
-            Console.WriteLine("stack is empty");
-
+            playerArray[0] = new Player("Kohli", 38);
+            playerArray[1] = new Player("Sachin", 35);
+            playerArray[2] = new Player("Rohit", 56);
+            playerArray[3] = new Player("yuvraj", 32);
         }
-
-
-        public static void Main()
+        public IEnumerator GetEnumerator()
         {
-            int i;
-            int k;
-            Stack<int> mystack = new Stack<int>(6);
-            Console.WriteLine("push=1 or pop=2");
-            int a = Convert.ToInt32(Console.ReadLine());
-            if (a == 1)
+            foreach (Player player in playerArray)
             {
-
-                for (i = 0; i <= 10; i++)
-                {
-                    Console.WriteLine("Enter the element:");
-                    int V = Convert.ToInt32(Console.ReadLine());
-                    mystack.Push(V);
-                    mystack.Count();
-                    if (mystack.Count == 5)
-                    {
-                        throw new StackException();
-                    }
-
-
-                }
-
+                Console.WriteLine("Name is {0} and Runs is {1}", player.Name, player.Run);
             }
-            else if (a == 2)
-            {
-                for (k = 5; k >= 10; k--)
-                {
-
-                    mystack.Pop();
-                    mystack.Count();
-                    if (mystack.Count == 0)
-                    {
-                        throw new StackException(" Can't do pop operation");
-                    }
-                }
-            }
-            else
-            {
-                Console.WriteLine("ENTER VALID NUMBER");
-            }
-
-            foreach (int j in mystack)
-            {
-                Console.WriteLine(j);
-            }
-            Console.ReadKey();
+            return playerArray.GetEnumerator();
         }
-
+    }
+    internal class Program
+    {
+        public static void Main(string[] args)
+        {
+            Team India = new Team();
+            India.GetEnumerator();
+            Console.ReadLine();
+        }
     }
 }
+
 
