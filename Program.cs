@@ -1,48 +1,50 @@
 ﻿using System;
-using System.Collections;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-namespace IEnumerableExample
+using System.IO;
+
+namespace FileIO
 {
-    class Player
+    public class program
     {
-        public string Name { get; set; }
-        public int Run { get; set; }
-        public Player(string name, int run)
+        public static void Main()
         {
-            Name = name;
-            Run = run;
-        }
-    }
-    class Team : IEnumerable
-    {
-        private Player[] playerArray = new Player[4];
-        public Team()
-        {
-            playerArray[0] = new Player("Kohli", 38);
-            playerArray[1] = new Player("Sachin", 35);
-            playerArray[2] = new Player("Rohit", 56);
-            playerArray[3] = new Player("yuvraj", 32);
-        }
-        public IEnumerator GetEnumerator()
-        {
-            foreach (Player player in playerArray)
+            try
             {
-                Console.WriteLine("Name is {0} and Runs is {1}", player.Name, player.Run);
+                string path = @"C:\Users\HYNDAVI\Source\Repos\FileIO\FileIO";
+                string[] files = Directory.GetFiles(path);
+                string[] directories = Directory.GetDirectories(path);
+                Console.WriteLine($"Files in{path}\n");
+                foreach (string file in files)
+                {
+                    string filesName = Path.GetFileName(file);
+                    Console.WriteLine(filesName);
+                    string filepath = Path.Combine(path, filesName);
+                    FileInfo myfile = new FileInfo(filepath);
+                    //OPEINING fike to read
+                    StreamReader sr = myfile.OpenText();
+                    string data = "";
+                    while ((data = sr.ReadLine()) != null)
+                    {
+                        Console.WriteLine(data);
+                    }
+                    Console.WriteLine("\n");
+
+                }
+                Console.WriteLine($"subdirectories inside{path}\n");
+                foreach (string directory in directories)
+                {
+                    DirectoryInfo directoryinfo = new DirectoryInfo(directory);
+                    directoryinfo.GetDirectories();
+                    string directoryName = directoryinfo.FullName;
+                    Console.WriteLine(directoryName);
+                }
             }
-            return playerArray.GetEnumerator();
+            catch (IOException e)
+            {
+                Console.WriteLine(e);
+            }
+
         }
-    }
-    internal class Program
-    {
-        public static void Main(string[] args)
-        {
-            Team India = new Team();
-            India.GetEnumerator();
-            Console.ReadLine();
-        }
+
+
     }
 }
-
-
